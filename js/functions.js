@@ -26,3 +26,24 @@ const getPozitiveInteger = function(text) {
 };
 
 
+//task 4
+const timeInMinutes = (timeInHours = '') => timeInHours.split(':')
+  .map((element, indexElement) => (indexElement === 0) ? parseInt(element, 10) * 60 : parseInt(element, 10))
+  .reduce((totalMinutes, time) => totalMinutes + time);
+
+const isMeetInLimit = (beginWorkingDay, endWorkingDay, startMeet, durationMeet = 0) => {
+  const beginWorkingDayInMinutes = timeInMinutes(beginWorkingDay);
+  const endWorkingDayInMinutes = timeInMinutes(endWorkingDay);
+  const startMeetInMinutes = timeInMinutes(startMeet);
+  const endMeetInMinutes = startMeetInMinutes + durationMeet;
+
+  return (startMeetInMinutes >= beginWorkingDayInMinutes && endMeetInMinutes <= endWorkingDayInMinutes);
+};
+
+isMeetInLimit('08:00', '17:30', '14:00', 90); //true
+isMeetInLimit('8:0', '10:0', '8:0', 120); //true
+isMeetInLimit('08:00', '14:30', '14:00', 90); //false
+isMeetInLimit('14:00', '17:30', '08:0', 90); //false
+isMeetInLimit('8:00', '17:30', '08:00', 900); //false
+
+
