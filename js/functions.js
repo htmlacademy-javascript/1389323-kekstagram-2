@@ -27,9 +27,10 @@ const getPozitiveInteger = function(text) {
 
 
 //task 4
-const timeInMinutes = (timeInHours = '') => timeInHours.split(':')
-  .map((element, indexElement) => (indexElement === 0) ? parseInt(element, 10) * 60 : parseInt(element, 10))
-  .reduce((totalMinutes, time) => totalMinutes + time);
+const timeInMinutes = (timeInHours = '') => {
+  const [hours, minutes] = timeInHours.split(':');
+  return hours * 60 + parseInt(minutes, 10);
+};
 
 const isMeetInLimit = (beginWorkingDay, endWorkingDay, startMeet, durationMeet = 0) => {
   const beginWorkingDayInMinutes = timeInMinutes(beginWorkingDay);

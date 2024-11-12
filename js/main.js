@@ -1,3 +1,1 @@
-import {descriptionPhotosList} from './data.js';
-
-console.table(descriptionPhotosList);
+import './draw-pictures.js';
