@@ -17,5 +17,18 @@ const getRandomInteger = (min, max) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+const findIndexElementTarget = (arrayElement, elementTarget) => {
+  let currentIndex;
+  arrayElement.forEach((element, elementIndex)=> {
+    if (element.src === elementTarget.src) {
+      currentIndex = elementIndex;
+      return currentIndex;
+    }
+  });
+  return currentIndex;
+};
 
-export {createNumberId, getRandomInteger, getRandomArrayElement};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+
+export {createNumberId, getRandomInteger, getRandomArrayElement, findIndexElementTarget, isEscapeKey};

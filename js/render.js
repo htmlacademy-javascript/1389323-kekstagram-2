@@ -1,9 +1,13 @@
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
 const fragmentPicture = document.createDocumentFragment();
 const picturesContainer = document.querySelector('.pictures');
+const photosList = [];
 
 const render = (photos) => {
-  photos.forEach(({url, description, likes, comments})=> {
+  photosList.length = 0;
+  photosList.push(...structuredClone(photos));
+
+  photosList.forEach(({url, description, likes, comments})=> {
     const newPicture = templatePicture.cloneNode(true);
     const pictureImage = newPicture.querySelector('.picture__img');
     pictureImage.src = url;
@@ -14,6 +18,7 @@ const render = (photos) => {
   });
 
   picturesContainer.append(fragmentPicture);
+  return photosList;
 };
 
-export {render};
+export {render, photosList};
