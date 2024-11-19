@@ -1,0 +1,14 @@
+const render = (comments, cloneElement) => {
+  const fragment = document.createDocumentFragment();
+  fragment.innerHTML = '';
+  comments.forEach(({avatar, username, message }) => {
+    const newComment = cloneElement.cloneNode(true);
+    newComment.src = avatar;
+    newComment.alt = username;
+    newComment.querySelector('.social__text').textContent = message;
+    fragment.append(newComment);
+  });
+  return fragment;
+};
+
+export {render};
