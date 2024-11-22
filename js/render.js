@@ -1,3 +1,5 @@
+import {openModal} from './modal-big-picture.js';
+
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
 const fragmentPicture = document.createDocumentFragment();
 const picturesContainer = document.querySelector('.pictures');
@@ -7,9 +9,10 @@ const render = (photos) => {
   photosList.length = 0;
   photosList.push(...structuredClone(photos));
 
-  photosList.forEach(({url, description, likes, comments})=> {
+  photosList.forEach(({id, url, description, likes, comments})=> {
     const newPicture = templatePicture.cloneNode(true);
     const pictureImage = newPicture.querySelector('.picture__img');
+    newPicture.dataset.idPhoto = id;
     pictureImage.src = url;
     pictureImage.alt = description;
     newPicture.querySelector('.picture__likes').textContent = likes;
@@ -21,4 +24,13 @@ const render = (photos) => {
   return photosList;
 };
 
-export {render, photosList};
+picturesContainer.addEventListener('click', (evt)=>{
+  const card = evt.target.closest('.picture');
+  if (card) {
+    const id = Number(card.dataset.idPhoto);
+    const currentPhoto = photosList.find((item)=>item.id === id);
+    openModal(currentPhoto);
+  }
+});
+
+export {render};
