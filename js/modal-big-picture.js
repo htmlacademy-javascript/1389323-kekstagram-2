@@ -3,7 +3,7 @@ import {render as renderComments} from './render-comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const body = document.body;
-const closeBigPictureButton = bigPicture.querySelector('.big-picture__cancel');
+const closeBigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
 const likesCount = bigPicture.querySelector('.likes-count');
 const countShownComment = bigPicture.querySelector('.social__comment-shown-count');
@@ -24,11 +24,15 @@ const hideModal = () => {
   body.classList.remove('modal-open');
 };
 
+const onCommentsLoaderClick = () => {
+  addComments();
+};
+
 const closeModal = () => {
   hideModal();
-  closeBigPictureButton.removeEventListener('click', closeModal);
+  closeBigPictureCancel.removeEventListener('click', closeModal);
   document.removeEventListener('keydown', onEscapeKeydown);
-  commentsLoader.removeEventListener('click', addComments);
+  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
 };
 
 function onEscapeKeydown (evt) {
@@ -51,7 +55,6 @@ const showCommentsLoader = () => {
 
 const hiddenCommentsLoader = () => {
   commentsLoader.classList.add('hidden');
-  commentsLoader.removeEventListener('click', addComments);
 };
 
 const checkCountShowComments = () => {
@@ -80,11 +83,11 @@ const render = ({url, likes, comments, description}) => {
 
 const openModal = (bigPhoto) => {
   showModal();
-  closeBigPictureButton.addEventListener('click', onBigPictureCancelClick);
+  closeBigPictureCancel.addEventListener('click', onBigPictureCancelClick);
   document.addEventListener('keydown', onEscapeKeydown);
   socialComments.innerHTML = '';
   render(bigPhoto);
-  commentsLoader.addEventListener('click', addComments);
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
 
 export {openModal};
