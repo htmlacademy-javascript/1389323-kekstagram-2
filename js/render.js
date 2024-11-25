@@ -27,6 +27,7 @@ const render = (photos) => {
 picturesContainer.addEventListener('click', (evt)=>{
   const card = evt.target.closest('.picture');
   if (card) {
+    evt.preventDefault();
     const id = Number(card.dataset.idPhoto);
     const currentPhoto = photosList.find((item)=>item.id === id);
     openModal(currentPhoto);
