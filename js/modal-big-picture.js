@@ -9,8 +9,9 @@ const likesCount = bigPicture.querySelector('.likes-count');
 const countShownComment = bigPicture.querySelector('.social__comment-shown-count');
 const totalCountComment = bigPicture.querySelector('.social__comment-total-count');
 const socialCaption = bigPicture.querySelector('.social__caption');
-const commentsLoader = document.querySelector('.comments-loader');
-const socialComments = document.querySelector('.social__comments');
+const commentsLoader = bigPicture.querySelector('.comments-loader');
+const socialComments = bigPicture.querySelector('.social__comments');
+const socialComment = socialComments.querySelector('.social__comment');
 let addShowComment;
 
 const showModal = () => {
@@ -62,23 +63,20 @@ const checkCountShowComments = () => {
   }
 };
 
-const render = ({id, url, likes, comments, description}) => {
-  bigPictureImage.src = url;
-  likesCount.textContent = likes;
-  totalCountComment.textContent = comments.length;
-  socialCaption.textContent = String(description);
-  addShowComment = renderComments(comments);
-  addShowComment();
-  checkCountShowComments();
-  countShownComment.textContent = socialComments.children.length;
-};
-
 function addComments () {
   addShowComment();
   checkCountShowComments();
   countShownComment.textContent = socialComments.children.length;
 }
 
+const render = ({url, likes, comments, description}) => {
+  bigPictureImage.src = url;
+  likesCount.textContent = likes;
+  totalCountComment.textContent = comments.length;
+  socialCaption.textContent = String(description);
+  addShowComment = renderComments(comments, socialComments, socialComment);
+  addComments();
+};
 
 const openModal = (bigPhoto) => {
   showModal();

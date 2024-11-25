@@ -1,12 +1,8 @@
 import {getIndexes} from './util.js';
+const STEP_COMMENTS = 5;
 
-const socialComments = document.querySelector('.social__comments');
-const socialComment = socialComments.querySelector('.social__comment');
-const countCommentsShow = 5;
-
-
-const renderComment = ({name, avatar, message}) => {
-  const newComment = socialComment.cloneNode(true);
+const renderComment = ({name, avatar, message}, templateComment) => {
+  const newComment = templateComment.cloneNode(true);
   const autorComment = newComment.querySelector('.social__picture');
   autorComment.src = avatar;
   autorComment.alt = name;
@@ -14,20 +10,19 @@ const renderComment = ({name, avatar, message}) => {
   return newComment;
 };
 
-
-const render = (comments) => {
-  const indexes = getIndexes(comments, countCommentsShow);
+const render = (comments, commentsList, templateComment) => {
+  const indexes = getIndexes(comments, STEP_COMMENTS);
 
   return function () {
     const fragment = document.createDocumentFragment();
     const showComments = comments.slice(...indexes());
 
     showComments.forEach((item) => {
-      const newComment = renderComment(item);
+      const newComment = renderComment(item, templateComment);
       fragment.append(newComment);
     });
-    socialComments.append(fragment);
-    return socialComments;
+    commentsList.append(fragment);
+    return commentsList;
   };
 };
 
