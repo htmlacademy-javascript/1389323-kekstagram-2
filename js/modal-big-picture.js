@@ -30,7 +30,7 @@ const onCommentsLoaderClick = () => {
 
 const closeModal = () => {
   hideModal();
-  closeBigPictureCancel.removeEventListener('click', closeModal);
+  closeBigPictureCancel.removeEventListener('click', onBigPictureCancelClick);
   document.removeEventListener('keydown', onEscapeKeydown);
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
 };
@@ -42,10 +42,10 @@ function onEscapeKeydown (evt) {
   }
 }
 
-const onBigPictureCancelClick = (evt) => {
+function onBigPictureCancelClick (evt) {
   evt.preventDefault();
   closeModal();
-};
+}
 
 const showCommentsLoader = () => {
   if (commentsLoader.classList.contains('hidden')) {
