@@ -30,7 +30,6 @@ const findIndexElementTarget = (arrayElement, elementTarget) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-
 let indexStart;
 
 const renderStartIndex = (step, elements) => {
@@ -65,6 +64,5 @@ const getIndexes = (comments, step) => {
     return indexesElement;
   };
 };
-
 
 export {createNumberId, getRandomInteger, getRandomArrayElement, findIndexElementTarget, isEscapeKey, getIndexes };
