@@ -32,9 +32,15 @@ const closeModal = () => {
 
 function onEscapeKeydown (evt) {
   if (isEscapeKey(evt)) {
+    evt.preventDefault();
     closeModal();
   }
 }
+
+const onBigPictureCancelClick = (evt) => {
+  evt.preventDefault();
+  closeModal();
+};
 
 const showCommentsLoader = () => {
   if (commentsLoader.classList.contains('hidden')) {
@@ -76,7 +82,7 @@ function addComments () {
 
 const openModal = (bigPhoto) => {
   showModal();
-  closeBigPictureButton.addEventListener('click', closeModal);
+  closeBigPictureButton.addEventListener('click', onBigPictureCancelClick);
   document.addEventListener('keydown', onEscapeKeydown);
   socialComments.innerHTML = '';
   render(bigPhoto);
