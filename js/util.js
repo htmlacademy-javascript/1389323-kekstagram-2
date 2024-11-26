@@ -30,5 +30,39 @@ const findIndexElementTarget = (arrayElement, elementTarget) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
+let indexStart;
 
-export {createNumberId, getRandomInteger, getRandomArrayElement, findIndexElementTarget, isEscapeKey};
+const renderStartIndex = (step, elements) => {
+  indexStart = -1 * step;
+  return function () {
+    indexStart += step;
+    if (indexStart < elements.length) {
+      return indexStart;
+    }
+  };
+};
+
+const renderMaxIndex = (step, elements) => {
+  let maxIndex = indexStart + step;
+  return function () {
+    maxIndex += step;
+    if (maxIndex < elements.length) {
+      return maxIndex;
+    } else {
+      return elements.length;
+    }
+  };
+};
+
+const getIndexes = (comments, step) => {
+  const min = renderStartIndex(step, comments);
+  const max = renderMaxIndex(step, comments);
+  let indexesElement;
+
+  return function () {
+    indexesElement = [min(), max()];
+    return indexesElement;
+  };
+};
+
+export {createNumberId, getRandomInteger, getRandomArrayElement, findIndexElementTarget, isEscapeKey, getIndexes };
