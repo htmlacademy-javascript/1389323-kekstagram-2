@@ -59,5 +59,5 @@ const onFormUploadSubmit = (evt) => {
   pristine.validate();
 };
 
-export {onFormUploadSubmit};
+export {onFormUploadSubmit, pristine};
 

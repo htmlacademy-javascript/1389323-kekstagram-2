@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import {onFormUploadSubmit} from './validation-form.js';
+import {onFormUploadSubmit, pristine} from './validation-form.js';
 
 const formUpload = document.querySelector('.img-upload__form');
 const formCorrecting = formUpload.querySelector('.img-upload__overlay');
@@ -31,12 +31,13 @@ const onInputContainerFocusout = () => {
 
 const closeFormCorrecting = () => {
   hideForm();
-  formUpload.reset();
   closeUpload.removeEventListener('click', oncloseUploadClick);
   document.removeEventListener('keydown', onEscapeKeydown);
   formUpload.removeEventListener('submit', onFormUploadSubmit);
   inputContainer.removeEventListener('focusin', onInputContainerFocusin);
   inputContainer.removeEventListener('focusout', onInputContainerFocusout);
+  formUpload.reset();
+  pristine.reset();
 };
 
 function oncloseUploadClick(evt) {
@@ -60,9 +61,9 @@ const onUploadChange = () => {
   showForm();
   closeUpload.addEventListener('click', oncloseUploadClick);
   document.addEventListener('keydown', onEscapeKeydown);
-  formUpload.addEventListener('submit', onFormUploadSubmit);
   inputContainer.addEventListener('focusin', onInputContainerFocusin);
   inputContainer.addEventListener('focusout', onInputContainerFocusout);
+  formUpload.addEventListener('submit', onFormUploadSubmit);
 };
 
 upload.addEventListener('change', onUploadChange);
