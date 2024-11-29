@@ -6,8 +6,8 @@ const formCorrecting = formUpload.querySelector('.img-upload__overlay');
 const body = document.body;
 const upload = formUpload.querySelector('.img-upload__input');
 const closeUpload = formCorrecting.querySelector('.img-upload__cancel');
+const inputForms = formCorrecting.querySelectorAll('.img-upload__field-wrapper *');
 let focusInput;
-
 
 const showForm = () => {
   formCorrecting.classList.remove('hidden');
@@ -19,8 +19,13 @@ const hideForm = () => {
   body.classList.remove('modal-open');
 };
 
-const onFormCorrectingClick = () => {
-  focusInput = formCorrecting.querySelector('.img-upload__field-wrapper *:focus') ?? false;
+const onInputFormFocus = () => {
+  focusInput = true;
+  return focusInput;
+};
+
+const onInputFormBlur = () => {
+  focusInput = false;
   return focusInput;
 };
 
@@ -29,8 +34,12 @@ const closeFormCorrecting = () => {
   formUpload.reset();
   closeUpload.removeEventListener('click', oncloseUploadClick);
   document.removeEventListener('keydown', onEscapeKeydown);
-  formCorrecting.removeEventListener('click', onFormCorrectingClick);
   formUpload.removeEventListener('submit', onFormUploadSubmit);
+
+  inputForms.forEach((inputForm)=> {
+    inputForm.removeEventListener('focus', onInputFormFocus);
+    inputForm.removeEventListener('blur', onInputFormBlur);
+  });
 };
 
 function oncloseUploadClick(evt) {
@@ -41,6 +50,7 @@ function oncloseUploadClick(evt) {
 function onEscapeKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
+
     if (focusInput) {
       evt.stopPropagation();
     } else {
@@ -49,12 +59,24 @@ function onEscapeKeydown (evt) {
   }
 }
 
+const getInputForm = (input) => {
+  if (input.classList.contains('text__hashtags') || input.classList.contains('text__description')) {
+    return true;
+  }
+};
+
 const onUploadChange = () => {
   showForm();
   closeUpload.addEventListener('click', oncloseUploadClick);
   document.addEventListener('keydown', onEscapeKeydown);
-  formCorrecting.addEventListener('click', onFormCorrectingClick);
   formUpload.addEventListener('submit', onFormUploadSubmit);
+
+  inputForms.forEach((inputForm)=> {
+    if (getInputForm(inputForm)) {
+      inputForm.addEventListener('focus', onInputFormFocus);
+      inputForm.addEventListener('blur', onInputFormBlur);
+    }
+  });
 };
 
 upload.addEventListener('change', onUploadChange);
