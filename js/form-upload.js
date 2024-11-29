@@ -6,7 +6,7 @@ const formCorrecting = formUpload.querySelector('.img-upload__overlay');
 const body = document.body;
 const upload = formUpload.querySelector('.img-upload__input');
 const closeUpload = formCorrecting.querySelector('.img-upload__cancel');
-const inputForms = formCorrecting.querySelectorAll('.img-upload__field-wrapper *');
+const inputContainer = formCorrecting.querySelector('.img-upload__text');
 let focusInput;
 
 const showForm = () => {
@@ -19,12 +19,12 @@ const hideForm = () => {
   body.classList.remove('modal-open');
 };
 
-const onInputFormFocus = () => {
+const onInputContainerFocusin = () => {
   focusInput = true;
   return focusInput;
 };
 
-const onInputFormBlur = () => {
+const onInputContainerFocusout = () => {
   focusInput = false;
   return focusInput;
 };
@@ -35,11 +35,8 @@ const closeFormCorrecting = () => {
   closeUpload.removeEventListener('click', oncloseUploadClick);
   document.removeEventListener('keydown', onEscapeKeydown);
   formUpload.removeEventListener('submit', onFormUploadSubmit);
-
-  inputForms.forEach((inputForm)=> {
-    inputForm.removeEventListener('focus', onInputFormFocus);
-    inputForm.removeEventListener('blur', onInputFormBlur);
-  });
+  inputContainer.removeEventListener('focusin', onInputContainerFocusin);
+  inputContainer.removeEventListener('focusout', onInputContainerFocusout);
 };
 
 function oncloseUploadClick(evt) {
@@ -59,24 +56,13 @@ function onEscapeKeydown (evt) {
   }
 }
 
-const getInputForm = (input) => {
-  if (input.classList.contains('text__hashtags') || input.classList.contains('text__description')) {
-    return true;
-  }
-};
-
 const onUploadChange = () => {
   showForm();
   closeUpload.addEventListener('click', oncloseUploadClick);
   document.addEventListener('keydown', onEscapeKeydown);
   formUpload.addEventListener('submit', onFormUploadSubmit);
-
-  inputForms.forEach((inputForm)=> {
-    if (getInputForm(inputForm)) {
-      inputForm.addEventListener('focus', onInputFormFocus);
-      inputForm.addEventListener('blur', onInputFormBlur);
-    }
-  });
+  inputContainer.addEventListener('focusin', onInputContainerFocusin);
+  inputContainer.addEventListener('focusout', onInputContainerFocusout);
 };
 
 upload.addEventListener('change', onUploadChange);
