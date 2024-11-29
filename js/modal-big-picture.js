@@ -47,28 +47,17 @@ function onBigPictureCancelClick (evt) {
   closeModal();
 }
 
-const showCommentsLoader = () => {
-  if (commentsLoader.classList.contains('hidden')) {
-    commentsLoader.classList.remove('hidden');
-  }
-};
-
-const hiddenCommentsLoader = () => {
-  commentsLoader.classList.add('hidden');
-};
-
-const checkCountShowComments = () => {
+const isAllShowComments = () => {
   if (Number(totalCountComment.textContent) <= socialComments.children.length) {
-    hiddenCommentsLoader();
-
+    commentsLoader.classList.add('hidden');
   } else {
-    showCommentsLoader();
+    commentsLoader.classList.remove('hidden');
   }
 };
 
 function addComments () {
   addShowComment();
-  checkCountShowComments();
+  isAllShowComments();
   countShownComment.textContent = socialComments.children.length;
 }
 
