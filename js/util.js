@@ -65,4 +65,9 @@ const getIndexes = (comments, step) => {
   };
 };
 
-export {createNumberId, getRandomInteger, getRandomArrayElement, findIndexElementTarget, isEscapeKey, getIndexes };
+const isDuplicate = (elements) => {
+  const duplicateElement = elements.filter((item, index, items) => items.indexOf(item) !== index);
+  return duplicateElement.length > 0;
+};
+
+export {createNumberId, getRandomInteger, getRandomArrayElement, findIndexElementTarget, isEscapeKey, getIndexes, isDuplicate };
