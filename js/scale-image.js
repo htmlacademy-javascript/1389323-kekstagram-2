@@ -1,7 +1,4 @@
-const scaleUploadImage = document.querySelector('.img-upload__scale');
-//const scaleSmaller = scaleUploadImage.querySelector('.scale__control--smaller');
-//const scaleBigger = scaleUploadImage.querySelector('.scale__control--bigger');
-const scaleValue = scaleUploadImage.querySelector('.scale__control--value');
+const scaleValue = document.querySelector('.scale__control--value');
 const imageUploadPreview = document.querySelector('.img-upload__preview img');
 
 const SCALE_VALUE_DEFAULT = '100%';
@@ -28,6 +25,6 @@ const onScaleBiggerClick = () => {
   return scaleValue.value;
 };
 
-export {onScaleSmallerClick, onScaleBiggerClick, changeScale, SCALE_VALUE_DEFAULT};
+export {onScaleSmallerClick, onScaleBiggerClick, changeScale, SCALE_VALUE_DEFAULT, imageUploadPreview};
 
 
