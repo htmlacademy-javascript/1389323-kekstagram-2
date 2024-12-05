@@ -70,16 +70,16 @@ const isDuplicate = (elements) => {
   return duplicateElement.length > 0;
 };
 
-const detailsError = (elements, errors, max) => {
+const detailsError = (elements, errors, settings) => {
   let detaleError;
   elements.forEach((hashtag) => {
-    if (!/^#/.test(hashtag)) {
+    if (!settings.firstSimbol.test(hashtag)) {
       detaleError = errors.errorNoHashtag;
-    } else if (/^#/.test(hashtag) && hashtag.length === 1) {
+    } else if (settings.min > hashtag.length) {
       detaleError = errors.errorOnlyHashtag;
-    } else if (hashtag.length > max) {
+    } else if (hashtag.length > settings.max) {
       detaleError = errors.errorLengthHashtag;
-    } else if (!/^#[a-zа-яё0-9]$/i.test(hashtag)) {
+    } else if (!settings.allowedValue.test(hashtag)) {
       detaleError = errors.errorNoValidSimbol;
     }
   });

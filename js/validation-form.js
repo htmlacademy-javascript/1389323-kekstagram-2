@@ -1,5 +1,5 @@
 import {isDuplicate, detailsError} from './util.js';
-import {HASHTAG_REG, ERROR_MESSAGE, LENGTH_DESCRIPTION_MAX, HASHTAG_MAX, MAX_SYMBOLS} from './constants.js';
+import {ERROR_MESSAGE, ERROR_SET} from './constants.js';
 
 const formUpload = document.querySelector('.img-upload__form');
 const hashtagInput = formUpload.querySelector('.text__hashtags');
@@ -24,14 +24,14 @@ const getHashtagError = (value) => {
       }
     });
 
-  if (hashtags.length > HASHTAG_MAX) {
+  if (hashtags.length > ERROR_SET.hashtagCountMax) {
     error = ERROR_MESSAGE.errorLength;
   } else if (isDuplicate(hashtags)) {
     error = ERROR_MESSAGE.errorRepeat;
   } else {
-    const isValidHashtag = hashtags.every((formatHashtag) => HASHTAG_REG.test(formatHashtag));
+    const isValidHashtag = hashtags.every((formatHashtag) => ERROR_SET.hashtagReg.test(formatHashtag));
     if (!isValidHashtag) {
-      error = `${ERROR_MESSAGE.errorNoValidate} : ${detailsError(hashtags, ERROR_MESSAGE, MAX_SYMBOLS)}`;
+      error = `${ERROR_MESSAGE.errorNoValidate} : ${detailsError(hashtags, ERROR_MESSAGE, ERROR_SET)}`;
     }
   }
   return error;
@@ -50,7 +50,7 @@ const getHashtagErrorMessage = (value) => getHashtagError(value);
 
 pristine.addValidator(hashtagInput, validateHashtag, getHashtagErrorMessage);
 
-const validateDescription = (textContent) => textContent.length <= LENGTH_DESCRIPTION_MAX;
+const validateDescription = (textContent) => textContent.length <= ERROR_SET.lengthDescriptionMax;
 
 pristine.addValidator(descriptionInput, validateDescription, ERROR_MESSAGE.errorDescription);
 

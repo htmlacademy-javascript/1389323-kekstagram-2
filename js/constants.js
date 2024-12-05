@@ -1,15 +1,20 @@
-export const HASHTAG_REG = /^#[a-zа-яё0-9]{1,19}$/i;
-export const HASHTAG_MAX = 5;
-export const LENGTH_DESCRIPTION_MAX = 140;
-export const MAX_SYMBOLS = 20;
+export const ERROR_SET = {
+  max : 20,
+  firstSimbol : /^#/,
+  min : 2,
+  allowedValue: /^#[a-zа-яё0-9]$/i,
+  hashtagReg :  /^#[a-zа-яё0-9]{1,19}$/i,
+  hashtagCountMax : 5,
+  lengthDescriptionMax : 140,
+};
 
 export const ERROR_MESSAGE = {
-  errorLength: `максимальное количество хэштэгов ${HASHTAG_MAX}`,
+  errorLength: `максимальное количество хэштэгов ${ERROR_SET.hashtagCountMax}`,
   errorRepeat: 'хэштеги повторяются',
   errorNoValidate: 'введён невалидный хэштег',
-  errorDescription: `длина комментария больше ${LENGTH_DESCRIPTION_MAX} символов`,
+  errorDescription: `длина комментария больше ${ERROR_SET.lengthDescriptionMax} символов`,
   errorNoValidSimbol: 'после решётки допустимы только буквы и числа',
-  errorLengthHashtag: `максимальная длина одного хэштега ${MAX_SYMBOLS} символов, включая решётку`,
+  errorLengthHashtag: `максимальная длина одного хэштега ${ERROR_SET.max} символов, включая решётку`,
   errorNoHashtag: 'хэштэг должен начинаться с символа #',
   errorOnlyHashtag: 'хештег не может состоять только из одной решётки',
 };
