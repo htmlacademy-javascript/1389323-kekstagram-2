@@ -34,15 +34,14 @@ noUiSlider.create(sliderElement, {
     },
     from: (value) => parseFloat(value),
   },
-
 });
 
-const changeLevelEffect = (value) => {
-  const currentEffect = document.querySelector('input[type="radio"]:checked');
-  if (EFFECTS_SET[currentEffect.value]) {
-    const currentFilter = EFFECTS_SET[currentEffect.value].effect;
-    const currentUnit = EFFECTS_SET[currentEffect.value].unit;
-    imageUploadPreview.style.filter = `${currentFilter}(${`${value}${currentUnit}`})`;
+const changeLevelEffect = (valueLevelEffect) => {
+  const currentEffect = document.querySelector('input[type="radio"]:checked').value;
+  if (EFFECTS_SET[currentEffect]) {
+    const currentFilter = EFFECTS_SET[currentEffect].effect;
+    const currentUnit = EFFECTS_SET[currentEffect].unit;
+    imageUploadPreview.style.filter = `${currentFilter}(${`${valueLevelEffect}${currentUnit}`})`;
   }
 };
 

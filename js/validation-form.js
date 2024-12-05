@@ -1,5 +1,5 @@
-import {isDuplicate} from './util.js';
-import {HASHTAG_REG, ERROR_MESSAGE, LENGTH_DESCRIPTION_MAX, HASHTAG_MAX} from './constants.js';
+import {isDuplicate, detailsError} from './util.js';
+import {HASHTAG_REG, ERROR_MESSAGE, LENGTH_DESCRIPTION_MAX, HASHTAG_MAX, MAX_SYMBOLS} from './constants.js';
 
 const formUpload = document.querySelector('.img-upload__form');
 const hashtagInput = formUpload.querySelector('.text__hashtags');
@@ -31,7 +31,7 @@ const getHashtagError = (value) => {
   } else {
     const isValidHashtag = hashtags.every((formatHashtag) => HASHTAG_REG.test(formatHashtag));
     if (!isValidHashtag) {
-      error = ERROR_MESSAGE.errorNoValidate;
+      error = `${ERROR_MESSAGE.errorNoValidate} : ${detailsError(hashtags, ERROR_MESSAGE, MAX_SYMBOLS)}`;
     }
   }
   return error;

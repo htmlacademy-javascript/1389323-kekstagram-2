@@ -1,12 +1,17 @@
 export const HASHTAG_REG = /^#[a-zа-яё0-9]{1,19}$/i;
 export const HASHTAG_MAX = 5;
 export const LENGTH_DESCRIPTION_MAX = 140;
+export const MAX_SYMBOLS = 20;
 
 export const ERROR_MESSAGE = {
   errorLength: `максимальное количество хэштэгов ${HASHTAG_MAX}`,
   errorRepeat: 'хэштеги повторяются',
   errorNoValidate: 'введён невалидный хэштег',
   errorDescription: `длина комментария больше ${LENGTH_DESCRIPTION_MAX} символов`,
+  errorNoValidSimbol: 'после решётки допустимы только буквы и числа',
+  errorLengthHashtag: `максимальная длина одного хэштега ${MAX_SYMBOLS} символов, включая решётку`,
+  errorNoHashtag: 'хэштэг должен начинаться с символа #',
+  errorOnlyHashtag: 'хештег не может состоять только из одной решётки',
 };
 
 export const SCALE_CONSTANTS = {
