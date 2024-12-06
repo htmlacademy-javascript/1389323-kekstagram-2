@@ -54,16 +54,9 @@ const validateDescription = (textContent) => textContent.length <= ERROR_SET.len
 
 pristine.addValidator(descriptionInput, validateDescription, ERROR_MESSAGE.errorDescription);
 
-const onFormUploadSubmit = (evt) => {
-  const isValid = pristine.validate();
-  if (!isValid) {
-    evt.preventDefault();
-  }
-};
-
-formUpload.addEventListener('submit', onFormUploadSubmit);
+const isValid = () => pristine.validate();
 
 const reset = () => pristine.reset();
 
-export {reset};
+export {isValid, reset};
 

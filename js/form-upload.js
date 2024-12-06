@@ -1,6 +1,6 @@
 import {isEscapeKey} from './util.js';
 import {resetEffect, onEffectListChange} from './effect-image.js';
-import {reset as resetPristine} from './validation-form.js';
+import {reset as resetPristine, isValid} from './validation-form.js';
 import {scaleReset} from './scale-image.js';
 
 const formUpload = document.querySelector('.img-upload__form');
@@ -33,6 +33,12 @@ const onInputContainerFocusout = () => {
   return focusInput;
 };
 
+const onFormUploadSubmit = (evt) => {
+  if (!isValid()) {
+    evt.preventDefault();
+  }
+};
+
 const closeFormCorrecting = () => {
   hideForm();
   closeUpload.removeEventListener('click', oncloseUploadClick);
@@ -43,6 +49,7 @@ const closeFormCorrecting = () => {
   formUpload.reset();
   scaleReset();
   effectList.removeEventListener('change', onEffectListChange);
+  formUpload.removeEventListener('submit', onFormUploadSubmit);
 };
 
 function oncloseUploadClick(evt) {
@@ -70,8 +77,7 @@ const onUploadChange = () => {
   inputContainer.addEventListener('focusout', onInputContainerFocusout);
   effectList.addEventListener('change', onEffectListChange);
   resetEffect();
+  formUpload.addEventListener('submit', onFormUploadSubmit);
 };
 
 upload.addEventListener('change', onUploadChange);
-
-
