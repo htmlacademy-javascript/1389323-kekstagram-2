@@ -8,7 +8,7 @@ const renderError = () => {
   body.append(newError);
 
   setTimeout(() => {
-    body.remove(newError);
+    body.remove(body.querySelector('.data-error'));
   },
   ALERT_ERROR_TIME);
 };
