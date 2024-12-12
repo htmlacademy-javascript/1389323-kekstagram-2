@@ -103,3 +103,5 @@ export const EFFECTS_SET = {
   },
 };
 
+export const ALERT_ERROR_TIME = 5000;
+
