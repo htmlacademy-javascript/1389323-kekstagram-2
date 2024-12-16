@@ -2,6 +2,8 @@ import {isEscapeKey} from './util.js';
 import {resetEffect, onEffectListChange} from './effect-image.js';
 import {reset as resetPristine, isValid} from './validation-form.js';
 import {scaleReset} from './scale-image.js';
+import {sendData} from './api.js';
+import {openMassageSuccess, openMassageError, isUpperOpenModal} from './massage.js';
 
 const formUpload = document.querySelector('.img-upload__form');
 const editorForm = formUpload.querySelector('.img-upload__overlay');
@@ -10,6 +12,7 @@ const upload = formUpload.querySelector('.img-upload__input');
 const closeUpload = editorForm.querySelector('.img-upload__cancel');
 const inputContainer = editorForm.querySelector('.img-upload__text');
 const effectList = document.querySelector('.effects__list');
+const submitButton = editorForm.querySelector('.img-upload__submit');
 
 let focusInput;
 
@@ -33,12 +36,6 @@ const onInputContainerFocusout = () => {
   return focusInput;
 };
 
-const onFormUploadSubmit = (evt) => {
-  if (!isValid()) {
-    evt.preventDefault();
-  }
-};
-
 const closeFormCorrecting = () => {
   hideForm();
   closeUpload.removeEventListener('click', oncloseUploadClick);
@@ -49,7 +46,7 @@ const closeFormCorrecting = () => {
   formUpload.reset();
   scaleReset();
   effectList.removeEventListener('change', onEffectListChange);
-  formUpload.removeEventListener('submit', onFormUploadSubmit);
+  resetEffect();
 };
 
 function oncloseUploadClick(evt) {
@@ -61,7 +58,7 @@ function onEscapeKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
 
-    if (focusInput) {
+    if (focusInput || isUpperOpenModal()) {
       evt.stopPropagation();
     } else {
       closeFormCorrecting();
@@ -76,8 +73,30 @@ const onUploadChange = () => {
   inputContainer.addEventListener('focusin', onInputContainerFocusin);
   inputContainer.addEventListener('focusout', onInputContainerFocusout);
   effectList.addEventListener('change', onEffectListChange);
-  resetEffect();
-  formUpload.addEventListener('submit', onFormUploadSubmit);
+};
+
+const blockSubmitButton = (isBlock = true) => {
+  submitButton.disabled = !!isBlock;
+};
+
+const onSuccessSend = () => {
+  openMassageSuccess();
+  closeFormCorrecting();
+};
+
+const configureFormUploadSubmit = (onSuccess) => {
+  formUpload.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    if (isValid()) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(()=> onSuccess())
+        .catch(() => openMassageError())
+        .finally(() => blockSubmitButton(false));
+    }
+  });
 };
 
 upload.addEventListener('change', onUploadChange);
+configureFormUploadSubmit(onSuccessSend);

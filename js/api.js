@@ -1,29 +1,26 @@
-const METHOD = {
-  GET: 'GET',
-  POST: 'POST'
-};
+import {METHOD, URL, ROUTE} from './constants';
 
-const getData = (onSuccess, onError) => {
-  fetch('https://31.javascript.htmlacademy.pro/kekstagram/data',
-    {method: METHOD.GET,
-      credentials: 'same-origin',
+const request = (route, method, body = null) =>
+  fetch(`${URL}${route}`,
+    {method: method,
+      body: body,
     },
   ).then((response) => {
     if (response.ok) {
       return response.json();
     }
     throw new Error();
-  }).then((data) => onSuccess(data))
-    .catch(() => onError());
-};
-
-const loadData = (body) => {
-  fetch('https://31.javascript.htmlacademy.pro/kekstagram', {
-    method: METHOD.POST,
-    credentials: 'same-origin',
-    body: body,
   });
-};
 
-export {getData};
+const getData = (onSuccess, onError) =>
+  request(ROUTE.GET_DATA, METHOD.GET)
+    .then((data) => onSuccess(data))
+    .catch(() => onError());
 
+const sendData = (body) =>
+  request(ROUTE.SEND_DATA, METHOD.POST, body)
+    .catch(() => {
+      throw new Error();
+    });
+
+export {getData, sendData};

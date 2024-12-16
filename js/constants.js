@@ -105,3 +105,14 @@ export const EFFECTS_SET = {
 
 export const ALERT_ERROR_TIME = 5000;
 
+export const METHOD = {
+  GET: 'GET',
+  POST: 'POST'
+};
+export const URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
+
+export const ROUTE = {
+  GET_DATA: '/data',
+  SEND_DATA: '',
+};
+

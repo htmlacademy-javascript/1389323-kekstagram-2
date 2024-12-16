@@ -60,5 +60,7 @@ function onEffectListChange(evt) {
   }
 }
 
+resetEffect();
+
 export {resetEffect, onEffectListChange};
 
