@@ -4,6 +4,7 @@ import {reset as resetPristine, isValid} from './validation-form.js';
 import {scaleReset} from './scale-image.js';
 import {sendData} from './api.js';
 import {openMassageSuccess, openMassageError, isUpperOpenModal} from './massage.js';
+import {SUBMIT_BUTTON_TEXT} from './constants.js';
 
 const formUpload = document.querySelector('.img-upload__form');
 const editorForm = formUpload.querySelector('.img-upload__overlay');
@@ -75,8 +76,10 @@ const onUploadChange = () => {
   effectList.addEventListener('change', onEffectListChange);
 };
 
+
 const blockSubmitButton = (isBlock = true) => {
   submitButton.disabled = !!isBlock;
+  submitButton.textContent = isBlock ? SUBMIT_BUTTON_TEXT.SENDING : SUBMIT_BUTTON_TEXT.IDLE;
 };
 
 const onSuccessSend = () => {

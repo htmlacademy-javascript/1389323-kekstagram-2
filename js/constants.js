@@ -116,3 +116,7 @@ export const ROUTE = {
   SEND_DATA: '',
 };
 
+export const SUBMIT_BUTTON_TEXT = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Отправляю...',
+};
