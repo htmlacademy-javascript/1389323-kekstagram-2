@@ -70,4 +70,20 @@ const isDuplicate = (elements) => {
   return duplicateElement.length > 0;
 };
 
-export {createNumberId, getRandomInteger, getRandomArrayElement, findIndexElementTarget, isEscapeKey, getIndexes, isDuplicate };
+const detailsError = (elements, errors, settings) => {
+  let detaleError;
+  elements.forEach((hashtag) => {
+    if (!settings.firstSimbol.test(hashtag)) {
+      detaleError = errors.errorNoHashtag;
+    } else if (settings.min > hashtag.length) {
+      detaleError = errors.errorOnlyHashtag;
+    } else if (hashtag.length > settings.max) {
+      detaleError = errors.errorLengthHashtag;
+    } else if (!settings.allowedValue.test(hashtag)) {
+      detaleError = errors.errorNoValidSimbol;
+    }
+  });
+  return detaleError;
+};
+
+export {createNumberId, getRandomInteger, getRandomArrayElement, findIndexElementTarget, isEscapeKey, getIndexes, isDuplicate, detailsError };

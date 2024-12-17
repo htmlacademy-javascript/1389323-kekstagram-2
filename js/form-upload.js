@@ -1,27 +1,29 @@
 import {isEscapeKey} from './util.js';
-import {resetEffect, onEffectListChange, effectList} from './effect-image.js';
-import {onFormUploadSubmit, pristine} from './validation-form.js';
-import {onScaleSmallerClick, onScaleBiggerClick, changeScale, SCALE_VALUE_DEFAULT} from './scale-image.js';
+import {resetEffect, onEffectListChange} from './effect-image.js';
+import {reset as resetPristine, isValid} from './validation-form.js';
+import {scaleReset} from './scale-image.js';
+import {sendData} from './api.js';
+import {openMassageSuccess, openMassageError, isUpperOpenModal} from './massage.js';
+import {SUBMIT_BUTTON_TEXT} from './constants.js';
 
 const formUpload = document.querySelector('.img-upload__form');
-const formCorrecting = formUpload.querySelector('.img-upload__overlay');
+const editorForm = formUpload.querySelector('.img-upload__overlay');
 const body = document.body;
 const upload = formUpload.querySelector('.img-upload__input');
-const closeUpload = formCorrecting.querySelector('.img-upload__cancel');
-const inputContainer = formCorrecting.querySelector('.img-upload__text');
-const scaleSmaller = formCorrecting.querySelector('.scale__control--smaller');
-const scaleBigger = formCorrecting.querySelector('.scale__control--bigger');
-
+const closeUpload = editorForm.querySelector('.img-upload__cancel');
+const inputContainer = editorForm.querySelector('.img-upload__text');
+const effectList = document.querySelector('.effects__list');
+const submitButton = editorForm.querySelector('.img-upload__submit');
 
 let focusInput;
 
 const showForm = () => {
-  formCorrecting.classList.remove('hidden');
+  editorForm.classList.remove('hidden');
   body.classList.add('modal-open');
 };
 
 const hideForm = () => {
-  formCorrecting.classList.add('hidden');
+  editorForm.classList.add('hidden');
   body.classList.remove('modal-open');
 };
 
@@ -39,15 +41,13 @@ const closeFormCorrecting = () => {
   hideForm();
   closeUpload.removeEventListener('click', oncloseUploadClick);
   document.removeEventListener('keydown', onEscapeKeydown);
-  formUpload.removeEventListener('submit', onFormUploadSubmit);
   inputContainer.removeEventListener('focusin', onInputContainerFocusin);
   inputContainer.removeEventListener('focusout', onInputContainerFocusout);
-  pristine.reset();
-  scaleSmaller.removeEventListener('click', onScaleSmallerClick);
-  scaleBigger.removeEventListener('click', onScaleBiggerClick);
+  resetPristine();
   formUpload.reset();
-  changeScale(SCALE_VALUE_DEFAULT);
+  scaleReset();
   effectList.removeEventListener('change', onEffectListChange);
+  resetEffect();
 };
 
 function oncloseUploadClick(evt) {
@@ -59,7 +59,7 @@ function onEscapeKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
 
-    if (focusInput) {
+    if (focusInput || isUpperOpenModal()) {
       evt.stopPropagation();
     } else {
       closeFormCorrecting();
@@ -73,13 +73,33 @@ const onUploadChange = () => {
   document.addEventListener('keydown', onEscapeKeydown);
   inputContainer.addEventListener('focusin', onInputContainerFocusin);
   inputContainer.addEventListener('focusout', onInputContainerFocusout);
-  formUpload.addEventListener('submit', onFormUploadSubmit);
-  scaleSmaller.addEventListener('click', onScaleSmallerClick);
-  scaleBigger.addEventListener('click', onScaleBiggerClick);
-  resetEffect('origin');
   effectList.addEventListener('change', onEffectListChange);
 };
 
+
+const blockSubmitButton = (isBlock = true) => {
+  submitButton.disabled = !!isBlock;
+  submitButton.textContent = isBlock ? SUBMIT_BUTTON_TEXT.SENDING : SUBMIT_BUTTON_TEXT.IDLE;
+};
+
+const onSuccessSend = () => {
+  openMassageSuccess();
+  closeFormCorrecting();
+};
+
+const configureFormUploadSubmit = (onSuccess) => {
+  formUpload.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    if (isValid()) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(()=> onSuccess())
+        .catch(() => openMassageError())
+        .finally(() => blockSubmitButton(false));
+    }
+  });
+};
+
 upload.addEventListener('change', onUploadChange);
-
-
+configureFormUploadSubmit(onSuccessSend);

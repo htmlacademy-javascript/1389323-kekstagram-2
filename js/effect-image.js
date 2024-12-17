@@ -1,20 +1,20 @@
-import {imageUploadPreview} from './scale-image.js';
+import {EFFECTS_SET} from './constants.js';
 
+const imageUploadPreview = document.querySelector('.img-upload__preview img');
 const containerSlider = document.querySelector('.img-upload__effect-level');
 const levelEffect = containerSlider.querySelector('.effect-level__value');
 const sliderElement = containerSlider.querySelector('.effect-level__slider');
-const effectList = document.querySelector('.effects__list');
 
-const resetEffect = (isOrigin) => {
+const resetEffect = (isNone = 'none') => {
   imageUploadPreview.style.filter = 'none';
-  if (isOrigin === 'origin') {
+
+  if (isNone === 'none') {
     containerSlider.classList.add('visually-hidden');
+    sliderElement.noUiSlider.set(EFFECTS_SET[isNone].setting.range.max);
   } else {
     containerSlider.classList.remove('visually-hidden');
   }
 };
-
-levelEffect.value = 100;
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -34,102 +34,33 @@ noUiSlider.create(sliderElement, {
     },
     from: (value) => parseFloat(value),
   },
-
 });
 
-const changeLevelEffect = (value) => {
-  const currentEffect = document.querySelector('input[type="radio"]:checked');
-  switch(currentEffect.value) {
-    case 'chrome':
-      imageUploadPreview.style.filter = `grayscale(${value})`;
-      break;
-    case 'sepia':
-      imageUploadPreview.style.filter = `sepia(${value})`;
-      break;
-    case 'marvin':
-      imageUploadPreview.style.filter = `invert(${`${value}%`} )`;
-      break;
-    case 'phobos':
-      imageUploadPreview.style.filter = `blur(${`${value}px`})`;
-      break;
-    case 'heat':
-      imageUploadPreview.style.filter = `brightness(${value})`;
-      break;
+const changeLevelEffect = (valueLevelEffect) => {
+  const currentEffect = document.querySelector('input[type="radio"]:checked').value;
+  if (EFFECTS_SET[currentEffect]) {
+    const currentFilter = EFFECTS_SET[currentEffect].effect;
+    const currentUnit = EFFECTS_SET[currentEffect].unit;
+    imageUploadPreview.style.filter = `${currentFilter}(${`${valueLevelEffect}${currentUnit}`})`;
   }
 };
 
 sliderElement.noUiSlider.on('update', () => {
   levelEffect.value = sliderElement.noUiSlider.get();
   changeLevelEffect(levelEffect.value);
-  return levelEffect.value;
 });
 
 function onEffectListChange(evt) {
-  resetEffect();
-  const checkedEffect = evt.target;
-  switch(checkedEffect.value) {
-    case 'chrome':
-      sliderElement.noUiSlider.updateOptions ({
-        range: {
-          min: 0,
-          max: 1,
-        },
-        step: 0.1,
-        start: 1,
-      });
-      break;
+  const checkedEffect = evt.target.value;
+  resetEffect(checkedEffect);
 
-    case 'sepia':
-      sliderElement.noUiSlider.updateOptions ({
-        range: {
-          min: 0,
-          max: 1,
-        },
-        step: 0.1,
-        start: 1,
-      });
-      break;
-
-    case 'marvin':
-      sliderElement.noUiSlider.updateOptions ({
-        range: {
-          min: 0,
-          max: 100,
-        },
-        step: 1,
-        start: 100,
-      });
-      break;
-
-    case 'phobos':
-      sliderElement.noUiSlider.updateOptions ({
-        range: {
-          min: 0,
-          max: 3,
-        },
-        step: 0.1,
-        start: 3,
-      });
-      break;
-
-    case 'heat':
-      sliderElement.noUiSlider.updateOptions ({
-        range: {
-          min: 1,
-          max: 3,
-        },
-        step: 0.1,
-        start: 3,
-      });
-      break;
-
-    case 'none':
-      resetEffect('origin');
-      break;
+  if (EFFECTS_SET[checkedEffect]) {
+    sliderElement.noUiSlider.updateOptions(EFFECTS_SET[checkedEffect].setting);
+    sliderElement.noUiSlider.set(EFFECTS_SET[checkedEffect].setting.range.max);
   }
 }
 
-effectList.addEventListener('change', onEffectListChange);
+resetEffect();
 
-export {resetEffect, onEffectListChange, effectList};
+export {resetEffect, onEffectListChange};
 

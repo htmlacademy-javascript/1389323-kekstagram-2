@@ -1,10 +1,9 @@
-import {isDuplicate} from './util.js';
+import {isDuplicate, detailsError} from './util.js';
+import {ERROR_MESSAGE, ERROR_SET} from './constants.js';
 
 const formUpload = document.querySelector('.img-upload__form');
 const hashtagInput = formUpload.querySelector('.text__hashtags');
 const descriptionInput = formUpload.querySelector('.text__description');
-const hashtagReg = /^#[a-zа-яё0-9]{1,19}$/i;
-const getDescriptionErrorMessage = 'длина комментария больше 140 символов';
 let error;
 
 const pristine = new Pristine(formUpload, {
@@ -17,6 +16,7 @@ const pristine = new Pristine(formUpload, {
 
 const getHashtagError = (value) => {
   const hashtags = value
+    .toLowerCase()
     .split(' ')
     .filter((item) => {
       if (item !== '') {
@@ -24,14 +24,14 @@ const getHashtagError = (value) => {
       }
     });
 
-  if (hashtags.length > 5) {
-    error = 'превышено количество хэштегов';
+  if (hashtags.length > ERROR_SET.hashtagCountMax) {
+    error = ERROR_MESSAGE.errorLength;
   } else if (isDuplicate(hashtags)) {
-    error = 'хэштеги повторяются';
+    error = ERROR_MESSAGE.errorRepeat;
   } else {
-    const isValidHashtag = hashtags.every((formatHashtag) => hashtagReg.test(formatHashtag));
+    const isValidHashtag = hashtags.every((formatHashtag) => ERROR_SET.hashtagReg.test(formatHashtag));
     if (!isValidHashtag) {
-      error = 'введён невалидный хэштег';
+      error = `${ERROR_MESSAGE.errorNoValidate} : ${detailsError(hashtags, ERROR_MESSAGE, ERROR_SET)}`;
     }
   }
   return error;
@@ -50,14 +50,13 @@ const getHashtagErrorMessage = (value) => getHashtagError(value);
 
 pristine.addValidator(hashtagInput, validateHashtag, getHashtagErrorMessage);
 
-const validateDescription = (textContent) => textContent.length <= 140;
+const validateDescription = (textContent) => textContent.length <= ERROR_SET.lengthDescriptionMax;
 
-pristine.addValidator(descriptionInput, validateDescription, getDescriptionErrorMessage);
+pristine.addValidator(descriptionInput, validateDescription, ERROR_MESSAGE.errorDescription);
 
-const onFormUploadSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-};
+const isValid = () => pristine.validate();
 
-export {onFormUploadSubmit, pristine};
+const reset = () => pristine.reset();
+
+export {isValid, reset};
 

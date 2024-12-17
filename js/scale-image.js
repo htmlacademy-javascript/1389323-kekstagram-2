@@ -1,30 +1,38 @@
+import {SCALE_CONSTANTS} from './constants.js';
+
+const {min, max, step, defaultScale, unit, factor} = SCALE_CONSTANTS;
 const scaleValue = document.querySelector('.scale__control--value');
 const imageUploadPreview = document.querySelector('.img-upload__preview img');
+const scaleSmaller = document.querySelector('.scale__control--smaller');
+const scaleBigger = document.querySelector('.scale__control--bigger');
 
-const SCALE_VALUE_DEFAULT = '100%';
-const SCALE_VALUE_MIN = '25%';
-const SCALE_VALUE_MAX = '100%';
-const SCALE_VALUE_STEP = 25;
+let scaleValueNumber = defaultScale();
 
-const scaleValueNumber = (scale) => Number(scale.replace('%', ''));
-scaleValue.value = SCALE_VALUE_DEFAULT;
-
-const changeScale = (scale = SCALE_VALUE_DEFAULT) => {
-  imageUploadPreview.style.transform = `scale(${scaleValueNumber(scale) / 100})`;
+const render = () => {
+  scaleValue.value = `${scaleValueNumber}${unit}`;
+  imageUploadPreview.style.transform = `scale(${(scaleValueNumber) * factor})`;
 };
 
 const onScaleSmallerClick = () => {
-  scaleValue.value = (scaleValue.value === SCALE_VALUE_MIN) ? SCALE_VALUE_MIN : `${scaleValueNumber(scaleValue.value) - SCALE_VALUE_STEP }%`;
-  changeScale(scaleValue.value);
-  return scaleValue.value;
+  scaleValueNumber = (scaleValueNumber > min) ? scaleValueNumber - step : min;
+  render();
 };
 
 const onScaleBiggerClick = () => {
-  scaleValue.value = (scaleValue.value === SCALE_VALUE_MAX) ? SCALE_VALUE_MAX : `${scaleValueNumber(scaleValue.value) + SCALE_VALUE_STEP }%`;
-  changeScale(scaleValue.value);
-  return scaleValue.value;
+  scaleValueNumber = (scaleValueNumber < max) ? scaleValueNumber + step : max;
+  render();
 };
 
-export {onScaleSmallerClick, onScaleBiggerClick, changeScale, SCALE_VALUE_DEFAULT, imageUploadPreview};
+scaleSmaller.addEventListener('click', onScaleSmallerClick);
+scaleBigger.addEventListener('click', onScaleBiggerClick);
+
+const scaleReset = () => {
+  scaleValueNumber = defaultScale();
+  render();
+};
+
+scaleReset();
+
+export {scaleReset};
 
 
