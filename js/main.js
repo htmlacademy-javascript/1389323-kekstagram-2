@@ -5,7 +5,7 @@ import {renderError} from './errors.js';
 
 try {
   getData(renderPictures, renderError);
-} catch {
+} catch (err) {
   renderError();
 }
 
