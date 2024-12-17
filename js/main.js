@@ -3,6 +3,10 @@ import './form-upload.js';
 import {getData} from './api.js';
 import {renderError} from './errors.js';
 
-getData(renderPictures, renderError);
+try {
+  getData(renderPictures, renderError);
+} catch {
+  renderError();
+}
 
 
