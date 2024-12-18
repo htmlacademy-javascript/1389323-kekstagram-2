@@ -73,14 +73,14 @@ const isDuplicate = (elements) => {
 const detailsError = (elements, errors, settings) => {
   let detaleError;
   elements.forEach((hashtag) => {
-    if (!settings.firstSimbol.test(hashtag)) {
-      detaleError = errors.errorNoHashtag;
-    } else if (settings.min > hashtag.length) {
-      detaleError = errors.errorOnlyHashtag;
-    } else if (hashtag.length > settings.max) {
-      detaleError = errors.errorLengthHashtag;
-    } else if (!settings.allowedValue.test(hashtag)) {
-      detaleError = errors.errorNoValidSimbol;
+    if (!settings.FIRST_SYMBOL.test(hashtag)) {
+      detaleError = errors.ERROR_NO_HASHTAG;
+    } else if (settings.MIN > hashtag.length) {
+      detaleError = errors.ERROR_ONLY_HASHTAG;
+    } else if (hashtag.length > settings.MAX) {
+      detaleError = errors.ERROR_LENGTH_HASHTAG;
+    } else if (!settings.ALLOWED_VALUE.test(hashtag)) {
+      detaleError = errors.ERROR_NO_VALID_SYMBOL;
     }
   });
   return detaleError;

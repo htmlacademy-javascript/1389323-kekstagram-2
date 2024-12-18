@@ -24,14 +24,14 @@ const getHashtagError = (value) => {
       }
     });
 
-  if (hashtags.length > ERROR_SET.hashtagCountMax) {
-    error = ERROR_MESSAGE.errorLength;
+  if (hashtags.length > ERROR_SET.HASHTAG_COUNT_MAX) {
+    error = ERROR_MESSAGE.ERROR_LENGTH;
   } else if (isDuplicate(hashtags)) {
-    error = ERROR_MESSAGE.errorRepeat;
+    error = ERROR_MESSAGE.ERROR_REPEAT;
   } else {
-    const isValidHashtag = hashtags.every((formatHashtag) => ERROR_SET.hashtagReg.test(formatHashtag));
+    const isValidHashtag = hashtags.every((formatHashtag) => ERROR_SET.HASHTAG_REG.test(formatHashtag));
     if (!isValidHashtag) {
-      error = `${ERROR_MESSAGE.errorNoValidate} : ${detailsError(hashtags, ERROR_MESSAGE, ERROR_SET)}`;
+      error = `${ERROR_MESSAGE.ERROR_NO_VALIDATE} : ${detailsError(hashtags, ERROR_MESSAGE, ERROR_SET)}`;
     }
   }
   return error;
@@ -50,9 +50,9 @@ const getHashtagErrorMessage = (value) => getHashtagError(value);
 
 pristine.addValidator(hashtagInput, validateHashtag, getHashtagErrorMessage);
 
-const validateDescription = (textContent) => textContent.length <= ERROR_SET.lengthDescriptionMax;
+const validateDescription = (textContent) => textContent.length <= ERROR_SET.LENGTH_DESCRIPTION_MAX;
 
-pristine.addValidator(descriptionInput, validateDescription, ERROR_MESSAGE.errorDescription);
+pristine.addValidator(descriptionInput, validateDescription, ERROR_MESSAGE.ERROR_DESCRIPTION);
 
 const isValid = () => pristine.validate();
 
