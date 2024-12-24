@@ -1,4 +1,4 @@
-import {getRandomArray, debounce} from './util.js';
+import {getRandomArray} from './util.js';
 import {COUNT_PHOTO} from './constants.js';
 
 const filtersContainer = document.querySelector('.img-filters');
@@ -7,11 +7,6 @@ const sortPhoto = (elementA, elementB) => {
   const countCommentA = elementA.comments.length;
   const countCommentB = elementB.comments.length;
   return countCommentB - countCommentA;
-};
-
-const clearPictures = () => {
-  document.querySelectorAll('.picture')
-    .forEach((picture) => picture.remove());
 };
 
 const FilterSet = {
@@ -30,16 +25,15 @@ const filterData = (elements, render) => {
   let data;
   filtersContainer.classList.remove('img-filters--inactive');
 
-  filtersContainer. addEventListener('click', debounce(({target}) => {
+  filtersContainer. addEventListener('click', ({target}) => {
     if (target.classList.contains('img-filters__button')) {
       changeActiveButton(target);
-      clearPictures();
       const activeButton = target.id.replace('filter-', '');
       const getData = FilterSet[activeButton];
       data = getData(elements);
       render(data);
     }
-  }));
+  });
 };
 
 export {filterData};

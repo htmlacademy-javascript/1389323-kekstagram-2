@@ -3,6 +3,7 @@ import './form-upload.js';
 import {getData} from './api.js';
 import {renderError} from './errors.js';
 import {filterData} from './filters.js';
+import {debounce} from './util.js';
 
 const originalData = await getData(renderError);
 
@@ -11,7 +12,7 @@ try {
     throw new Error();
   }
   renderPictures(originalData);
-  filterData(originalData, renderPictures);
+  filterData(originalData, debounce(renderPictures));
 } catch (err) {
   renderError();
 }
