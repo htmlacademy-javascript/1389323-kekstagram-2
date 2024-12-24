@@ -1,5 +1,5 @@
 import {getRandomArray, debounce} from './util.js';
-import {COUNT_PHOTO, TIMEOUT_DELAY} from './constants.js';
+import {COUNT_PHOTO} from './constants.js';
 
 const filtersContainer = document.querySelector('.img-filters');
 
@@ -7,6 +7,11 @@ const sortPhoto = (elementA, elementB) => {
   const countCommentA = elementA.comments.length;
   const countCommentB = elementB.comments.length;
   return countCommentB - countCommentA;
+};
+
+const clearPictures = () => {
+  document.querySelectorAll('.picture')
+    .forEach((picture) => picture.remove());
 };
 
 const FilterSet = {
@@ -22,26 +27,19 @@ const changeActiveButton = (currentButton) => {
 };
 
 const filterData = (elements, render) => {
-  let data = elements;
-  render(data);
+  let data;
   filtersContainer.classList.remove('img-filters--inactive');
 
   filtersContainer. addEventListener('click', debounce(({target}) => {
-    const activeElement = target;
-
-    if (activeElement.classList.contains('img-filters__button')) {
+    if (target.classList.contains('img-filters__button')) {
       changeActiveButton(target);
-
-      document.querySelectorAll('.picture')
-        .forEach((picture) => picture.remove());
-
-      const activeButton = activeElement.id.replace('filter-', '');
+      clearPictures();
+      const activeButton = target.id.replace('filter-', '');
       const getData = FilterSet[activeButton];
       data = getData(elements);
       render(data);
     }
-  }, TIMEOUT_DELAY));
-
+  }));
 };
 
 export {filterData};

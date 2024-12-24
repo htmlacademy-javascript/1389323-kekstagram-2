@@ -1,3 +1,5 @@
+import {TIMEOUT_DELAY} from './constants.js';
+
 const createNumberId = () => {
   let indexId = 0;
 
@@ -99,7 +101,7 @@ const detailsError = (elements, errors, settings) => {
   return detaleError;
 };
 
-const debounce = (callback, timeoutDelay) => {
+const debounce = (callback, timeoutDelay = TIMEOUT_DELAY) => {
   let timeoutId;
 
   return (...rest) => {

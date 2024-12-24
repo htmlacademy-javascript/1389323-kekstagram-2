@@ -10,6 +10,7 @@ try {
   if (!originalData) {
     throw new Error();
   }
+  renderPictures(originalData);
   filterData(originalData, renderPictures);
 } catch (err) {
   renderError();
