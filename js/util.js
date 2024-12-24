@@ -17,6 +17,19 @@ const getRandomInteger = (min, max) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+const getRandomArray = (elements, lengthNewArray) => {
+  const newArray = [];
+  const countIterations = elements.length >= lengthNewArray ? lengthNewArray : elements.length;
+  while (newArray.length < countIterations) {
+    const newElement = getRandomArrayElement(elements);
+    if (newArray.every((element) => element !== newElement)) {
+      newArray.push(newElement);
+    }
+  }
+  return newArray;
+};
+
+
 const findIndexElementTarget = (arrayElement, elementTarget) => {
   let currentIndex;
   arrayElement.forEach((element, elementIndex)=> {
@@ -86,4 +99,13 @@ const detailsError = (elements, errors, settings) => {
   return detaleError;
 };
 
-export {createNumberId, getRandomInteger, getRandomArrayElement, findIndexElementTarget, isEscapeKey, getIndexes, isDuplicate, detailsError };
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {createNumberId, getRandomInteger, getRandomArrayElement, findIndexElementTarget, isEscapeKey, getIndexes, isDuplicate, detailsError, getRandomArray, debounce };

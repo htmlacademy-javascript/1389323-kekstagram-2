@@ -87,14 +87,14 @@ const onSuccessSend = () => {
   closeFormCorrecting();
 };
 
-const configureFormUploadSubmit = (onSuccess) => {
+const configureFormUploadSubmit = () => {
   formUpload.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     if (isValid()) {
       blockSubmitButton();
       sendData(new FormData(evt.target))
-        .then(()=> onSuccess())
+        .then(()=> onSuccessSend())
         .catch(() => openMassageError())
         .finally(() => blockSubmitButton(false));
     }
@@ -102,4 +102,4 @@ const configureFormUploadSubmit = (onSuccess) => {
 };
 
 upload.addEventListener('change', onUploadChange);
-configureFormUploadSubmit(onSuccessSend);
+configureFormUploadSubmit();

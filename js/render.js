@@ -19,7 +19,6 @@ const render = (photos) => {
     newPicture.querySelector('.picture__comments').textContent = comments.length;
     fragmentPicture.append(newPicture);
   });
-
   picturesContainer.append(fragmentPicture);
   return photosList;
 };

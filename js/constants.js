@@ -129,3 +129,7 @@ export const SUBMIT_BUTTON_TEXT = {
   IDLE: 'Опубликовать',
   SENDING: 'Отправляю...',
 };
+
+export const COUNT_PHOTO = 10;
+
+export const TIMEOUT_DELAY = 500;
