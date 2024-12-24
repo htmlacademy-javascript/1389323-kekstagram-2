@@ -3,7 +3,7 @@ import {COUNT_PHOTO} from './constants.js';
 
 const filtersContainer = document.querySelector('.img-filters');
 
-const sortPhoto = (elementA, elementB) => {
+const compareComments = (elementA, elementB) => {
   const countCommentA = elementA.comments.length;
   const countCommentB = elementB.comments.length;
   return countCommentB - countCommentA;
@@ -12,7 +12,7 @@ const sortPhoto = (elementA, elementB) => {
 const FilterSet = {
   default: (elements) => elements.slice(),
   random: (elements) => getRandomArray(elements, COUNT_PHOTO),
-  discussed: (elements) => elements.slice().sort(sortPhoto),
+  discussed: (elements) => elements.slice().sort(compareComments),
 };
 
 const changeActiveButton = (currentButton) => {
