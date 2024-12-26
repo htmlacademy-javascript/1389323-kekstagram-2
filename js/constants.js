@@ -1,37 +1,46 @@
 export const ERROR_SET = {
-  max : 20,
-  firstSimbol : /^#/,
-  min : 2,
-  allowedValue: /^#[a-zа-яё0-9]$/i,
-  hashtagReg :  /^#[a-zа-яё0-9]{1,19}$/i,
-  hashtagCountMax : 5,
-  lengthDescriptionMax : 140,
+  MAX: 20,
+  FIRST_SYMBOL: /^#/,
+  MIN: 2,
+  ALLOWED_VALUE: /^#[a-zа-яё0-9]$/i,
+  HASHTAG_REG:  /^#[a-zа-яё0-9]{1,19}$/i,
+  HASHTAG_COUNT_MAX: 5,
+  LENGTH_DESCRIPTION_MAX: 140,
 };
 
 export const ERROR_MESSAGE = {
-  errorLength: `максимальное количество хэштэгов ${ERROR_SET.hashtagCountMax}`,
-  errorRepeat: 'хэштеги повторяются',
-  errorNoValidate: 'введён невалидный хэштег',
-  errorDescription: `длина комментария больше ${ERROR_SET.lengthDescriptionMax} символов`,
-  errorNoValidSimbol: 'после решётки допустимы только буквы и числа',
-  errorLengthHashtag: `максимальная длина одного хэштега ${ERROR_SET.max} символов, включая решётку`,
-  errorNoHashtag: 'хэштэг должен начинаться с символа #',
-  errorOnlyHashtag: 'хештег не может состоять только из одной решётки',
+  ERROR_LENGTH: `максимальное количество хэштэгов ${ERROR_SET.HASHTAG_COUNT_MAX}`,
+  ERROR_REPEAT: 'хэштеги повторяются',
+  ERROR_NO_VALIDATE: 'введён невалидный хэштег',
+  ERROR_DESCRIPTION: `длина комментария больше ${ERROR_SET.LENGTH_DESCRIPTION_MAX} символов`,
+  ERROR_NO_VALID_SYMBOL: 'после решётки допустимы только буквы и числа',
+  ERROR_LENGTH_HASHTAG: `максимальная длина одного хэштега ${ERROR_SET.MAX} символов, включая решётку`,
+  ERROR_NO_HASHTAG: 'хэштэг должен начинаться с символа #',
+  ERROR_ONLY_HASHTAG: 'хештег не может состоять только из одной решётки',
 };
 
 export const SCALE_CONSTANTS = {
-  min: 25,
-  max: 100,
-  defaultScale: function() {
-    return SCALE_CONSTANTS .max;
+  MIN: 25,
+  MAX: 100,
+  DEFAULT_SCALE: function() {
+    return SCALE_CONSTANTS.MAX;
   },
-  step: 25,
-  unit: '%',
-  factor: 0.01,
+  STEP: 25,
+  UNIT: '%',
+  FACTOR: 0.01,
+};
+
+const EFFECTS = {
+  CHROME: 'chrome',
+  SEPIA: 'sepia',
+  MARVIN:'marvin',
+  PHOBOS:'phobos',
+  HEAT:'heat',
+  NONE: 'none',
 };
 
 export const EFFECTS_SET = {
-  chrome: {
+  [EFFECTS.CHROME]: {
     setting: {
       range:{
         min: 0,
@@ -43,7 +52,7 @@ export const EFFECTS_SET = {
     unit: '',
   },
 
-  sepia:{
+  [EFFECTS.SEPIA]:{
     setting: {
       range:{
         min: 0,
@@ -55,7 +64,7 @@ export const EFFECTS_SET = {
     unit: '',
   },
 
-  marvin: {
+  [EFFECTS.MARVIN]: {
     setting: {
       range:{
         min: 0,
@@ -67,7 +76,7 @@ export const EFFECTS_SET = {
     unit: '%',
   },
 
-  phobos: {
+  [EFFECTS.PHOBOS]: {
     setting: {
       range:{
         min: 0,
@@ -79,7 +88,7 @@ export const EFFECTS_SET = {
     unit: 'px',
   },
 
-  heat: {
+  [EFFECTS.HEAT]: {
     setting: {
       range:{
         min: 1,
@@ -91,7 +100,7 @@ export const EFFECTS_SET = {
     unit: '',
   },
 
-  none: {
+  [EFFECTS.NONE]: {
     setting: {
       range:{
         min: 1,
@@ -120,3 +129,7 @@ export const SUBMIT_BUTTON_TEXT = {
   IDLE: 'Опубликовать',
   SENDING: 'Отправляю...',
 };
+
+export const COUNT_PHOTO = 10;
+
+export const TIMEOUT_DELAY = 500;

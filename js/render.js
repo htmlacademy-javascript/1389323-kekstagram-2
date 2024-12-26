@@ -5,6 +5,11 @@ const fragmentPicture = document.createDocumentFragment();
 const picturesContainer = document.querySelector('.pictures');
 const photosList = [];
 
+const clearPictures = () => {
+  document.querySelectorAll('.picture')
+    .forEach((picture) => picture.remove());
+};
+
 const render = (photos) => {
   photosList.length = 0;
   photosList.push(...structuredClone(photos));
@@ -20,6 +25,7 @@ const render = (photos) => {
     fragmentPicture.append(newPicture);
   });
 
+  clearPictures();
   picturesContainer.append(fragmentPicture);
   return photosList;
 };

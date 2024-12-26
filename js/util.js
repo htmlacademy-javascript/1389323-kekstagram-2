@@ -1,3 +1,5 @@
+import {TIMEOUT_DELAY} from './constants.js';
+
 const createNumberId = () => {
   let indexId = 0;
 
@@ -16,6 +18,19 @@ const getRandomInteger = (min, max) => {
 };
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+
+const getRandomArray = (elements, lengthNewArray) => {
+  const newArray = [];
+  const countIterations = elements.length >= lengthNewArray ? lengthNewArray : elements.length;
+  while (newArray.length < countIterations) {
+    const newElement = getRandomArrayElement(elements);
+    if (newArray.every((element) => element !== newElement)) {
+      newArray.push(newElement);
+    }
+  }
+  return newArray;
+};
+
 
 const findIndexElementTarget = (arrayElement, elementTarget) => {
   let currentIndex;
@@ -73,17 +88,26 @@ const isDuplicate = (elements) => {
 const detailsError = (elements, errors, settings) => {
   let detaleError;
   elements.forEach((hashtag) => {
-    if (!settings.firstSimbol.test(hashtag)) {
-      detaleError = errors.errorNoHashtag;
-    } else if (settings.min > hashtag.length) {
-      detaleError = errors.errorOnlyHashtag;
-    } else if (hashtag.length > settings.max) {
-      detaleError = errors.errorLengthHashtag;
-    } else if (!settings.allowedValue.test(hashtag)) {
-      detaleError = errors.errorNoValidSimbol;
+    if (!settings.FIRST_SYMBOL.test(hashtag)) {
+      detaleError = errors.ERROR_NO_HASHTAG;
+    } else if (settings.MIN > hashtag.length) {
+      detaleError = errors.ERROR_ONLY_HASHTAG;
+    } else if (hashtag.length > settings.MAX) {
+      detaleError = errors.ERROR_LENGTH_HASHTAG;
+    } else if (!settings.ALLOWED_VALUE.test(hashtag)) {
+      detaleError = errors.ERROR_NO_VALID_SYMBOL;
     }
   });
   return detaleError;
 };
 
-export {createNumberId, getRandomInteger, getRandomArrayElement, findIndexElementTarget, isEscapeKey, getIndexes, isDuplicate, detailsError };
+const debounce = (callback, timeoutDelay = TIMEOUT_DELAY) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {createNumberId, getRandomInteger, getRandomArrayElement, findIndexElementTarget, isEscapeKey, getIndexes, isDuplicate, detailsError, getRandomArray, debounce };
