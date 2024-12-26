@@ -5,6 +5,7 @@ import {scaleReset} from './scale-image.js';
 import {sendData} from './api.js';
 import {openMassageSuccess, openMassageError, isUpperOpenModal} from './massage.js';
 import {SUBMIT_BUTTON_TEXT} from './constants.js';
+import {uploadPreview} from './preview.js';
 
 const formUpload = document.querySelector('.img-upload__form');
 const editorForm = formUpload.querySelector('.img-upload__overlay');
@@ -70,6 +71,7 @@ function onEscapeKeydown (evt) {
 const onUploadChange = () => {
   showForm();
   closeUpload.addEventListener('click', oncloseUploadClick);
+  uploadPreview();
   document.addEventListener('keydown', onEscapeKeydown);
   inputContainer.addEventListener('focusin', onInputContainerFocusin);
   inputContainer.addEventListener('focusout', onInputContainerFocusout);

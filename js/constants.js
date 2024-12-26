@@ -133,3 +133,5 @@ export const SUBMIT_BUTTON_TEXT = {
 export const COUNT_PHOTO = 10;
 
 export const TIMEOUT_DELAY = 500;
+
+export const FILE_FORMATS = ['.jpg', 'jpeg', '.png'];
