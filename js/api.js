@@ -12,10 +12,8 @@ const request = (route, method, body = null) =>
       throw new Error();
     });
 
-const getData = (/*onSuccess,*/ onError) =>
+const getData = (onError) =>
   request(ROUTE.GET_DATA, METHOD.GET)
-    //.then((data) => onSuccess(data))
-    //.then((data) => console.log(data))
     .catch(() => onError());
 
 const sendData = (body) =>
