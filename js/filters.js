@@ -25,12 +25,11 @@ const filterData = (elements, render) => {
   let data;
   filtersContainer.classList.remove('img-filters--inactive');
 
-  filtersContainer. addEventListener('click', ({target}) => {
+  filtersContainer.addEventListener('click', ({target}) => {
     if (target.classList.contains('img-filters__button')) {
       changeActiveButton(target);
       const activeButton = target.id.replace('filter-', '');
-      const getData = FilterSet[activeButton];
-      data = getData(elements);
+      data = FilterSet[activeButton](elements);
       render(data);
     }
   });
