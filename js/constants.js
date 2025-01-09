@@ -1,3 +1,5 @@
+export const STEP_COMMENTS = 5;
+
 export const ERROR_SET = {
   MAX: 20,
   FIRST_SYMBOL: /^#/,

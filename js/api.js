@@ -1,4 +1,4 @@
-import {METHOD, URL, ROUTE} from './constants';
+import {METHOD, URL, ROUTE} from './constants.js';
 
 const request = (route, method, body = null) =>
   fetch(`${URL}${route}`, {

@@ -1,5 +1,5 @@
 import {getIndexes} from './util.js';
-const STEP_COMMENTS = 5;
+import {STEP_COMMENTS} from './constants.js';
 
 const renderComment = ({name, avatar, message}, templateComment) => {
   const newComment = templateComment.cloneNode(true);
@@ -13,7 +13,7 @@ const renderComment = ({name, avatar, message}, templateComment) => {
 const render = (comments, commentsList, templateComment) => {
   const indexes = getIndexes(comments, STEP_COMMENTS);
 
-  return function () {
+  return () => {
     const fragment = document.createDocumentFragment();
     const showComments = comments.slice(...indexes());
 

@@ -1,7 +1,7 @@
 import {isEscapeKey} from './util.js';
 
-const massageSuccess = document.querySelector('#success').content.querySelector('.success');
-const massageError = document.querySelector('#error').content.querySelector('.error');
+const messageSuccess = document.querySelector('#success').content.querySelector('.success');
+const messageError = document.querySelector('#error').content.querySelector('.error');
 const body = document.body;
 let closeButton;
 let response;
@@ -35,20 +35,20 @@ const onCloseButtonClick = () => {
   closeMassage(response);
 };
 
-function closeMassage(massage) {
-  massage.remove();
+function closeMassage(message) {
+  message.remove();
   closeButton.removeEventListener('click', onCloseButtonClick);
   document.removeEventListener('click', onDocumentClick);
   document.removeEventListener('keydown', onDocumnetKeydown);
 }
 
-const createMassage = (massage) => {
-  response = massage.cloneNode(true);
+const createMessage = (message) => {
+  response = message.cloneNode(true);
   return response;
 };
 
-const openMassage = (massage) => {
-  createMassage(massage);
+const openMessage = (message) => {
+  createMessage(message);
   body.append(response);
   closeButton = response.querySelector('[class$= "_button"]');
   closeButton.addEventListener('click', onCloseButtonClick);
@@ -57,13 +57,13 @@ const openMassage = (massage) => {
   return closeButton;
 };
 
-const openMassageSuccess = () => {
-  openMassage(massageSuccess);
+const openMessageSuccess = () => {
+  openMessage(messageSuccess);
 };
 
-const openMassageError = () => {
-  openMassage(massageError);
+const openMessageError = () => {
+  openMessage(messageError);
 };
 
-export {openMassageSuccess, openMassageError, isUpperOpenModal};
+export {openMessageSuccess, openMessageError, isUpperOpenModal};
 
