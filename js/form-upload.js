@@ -3,7 +3,7 @@ import {resetEffect, onEffectListChange} from './effect-image.js';
 import {reset as resetPristine, isValid} from './validation-form.js';
 import {scaleReset} from './scale-image.js';
 import {sendData} from './api.js';
-import {openMassageSuccess, openMassageError, isUpperOpenModal} from './massage.js';
+import {openMessageSuccess, openMessageError, isUpperOpenModal} from './message.js';
 import {SUBMIT_BUTTON_TEXT} from './constants.js';
 import {uploadPreview} from './preview.js';
 
@@ -85,7 +85,7 @@ const blockSubmitButton = (isBlock = true) => {
 };
 
 const onSuccessSend = () => {
-  openMassageSuccess();
+  openMessageSuccess();
   closeFormCorrecting();
 };
 
@@ -97,7 +97,7 @@ const configureFormUploadSubmit = () => {
       blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(()=> onSuccessSend())
-        .catch(() => openMassageError())
+        .catch(() => openMessageError())
         .finally(() => blockSubmitButton(false));
     }
   });

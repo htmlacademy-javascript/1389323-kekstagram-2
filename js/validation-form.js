@@ -39,11 +39,10 @@ const getHashtagError = (value) => {
 
 const validateHashtag = (value) => {
   error = '';
-  if (value.length === 0) {
-    return true;
-  } else {
+  if (value.length !== 0) {
     return !((getHashtagError(value).length ?? 0) > 0);
   }
+  return true;
 };
 
 const getHashtagErrorMessage = (value) => getHashtagError(value);
