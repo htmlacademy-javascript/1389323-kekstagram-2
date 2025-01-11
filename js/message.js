@@ -10,9 +10,8 @@ const isUpperOpenModal = () => {
   const upperModal = document.querySelector('.error') ?? false;
   if (upperModal) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 };
 
 const onDocumnetKeydown = (evt) => {

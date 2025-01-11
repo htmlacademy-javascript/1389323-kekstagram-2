@@ -24,7 +24,7 @@ export const ERROR_MESSAGE = {
 export const SCALE_CONSTANTS = {
   MIN: 25,
   MAX: 100,
-  DEFAULT_SCALE: function() {
+  GET_DEFAULT: function() {
     return SCALE_CONSTANTS.MAX;
   },
   STEP: 25,

@@ -1,4 +1,3 @@
-import {getRandomArray} from './util.js';
 import {COUNT_PHOTO} from './constants.js';
 
 const filtersContainer = document.querySelector('.img-filters');
@@ -10,9 +9,9 @@ const compareComments = (elementA, elementB) => {
 };
 
 const FilterSet = {
-  default: (elements) => elements.slice(),
-  random: (elements) => getRandomArray(elements, COUNT_PHOTO),
-  discussed: (elements) => elements.slice().sort(compareComments),
+  activateDefault: (elements) => elements.slice(),
+  activateRandom: (elements) => elements.slice().sort(() => Math.random() - 0.5).slice(0, COUNT_PHOTO),
+  activateDiscussed: (elements) => elements.slice().sort(compareComments),
 };
 
 const changeActiveButton = (currentButton) => {
@@ -28,7 +27,8 @@ const filterData = (elements, render) => {
   filtersContainer.addEventListener('click', ({target}) => {
     if (target.classList.contains('img-filters__button')) {
       changeActiveButton(target);
-      const activeButton = target.id.replace('filter-', '');
+      const activeButton = `activate${target.id.replace('filter-', '')
+        .replace(/^./, (char) => char.toUpperCase())}`;
       data = FilterSet[activeButton](elements);
       render(data);
     }
