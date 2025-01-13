@@ -1,12 +1,12 @@
 import {SCALE_CONSTANTS} from './constants.js';
 
-const {MIN, MAX, STEP, DEFAULT_SCALE, UNIT, FACTOR} = SCALE_CONSTANTS;
+const {MIN, MAX, STEP, GET_DEFAULT, UNIT, FACTOR} = SCALE_CONSTANTS;
 const scaleValue = document.querySelector('.scale__control--value');
 const imageUploadPreview = document.querySelector('.img-upload__preview img');
 const scaleSmaller = document.querySelector('.scale__control--smaller');
 const scaleBigger = document.querySelector('.scale__control--bigger');
 
-let scaleValueNumber = DEFAULT_SCALE();
+let scaleValueNumber = GET_DEFAULT();
 
 const render = () => {
   scaleValue.value = `${scaleValueNumber}${UNIT}`;
@@ -27,7 +27,7 @@ scaleSmaller.addEventListener('click', onScaleSmallerClick);
 scaleBigger.addEventListener('click', onScaleBiggerClick);
 
 const scaleReset = () => {
-  scaleValueNumber = DEFAULT_SCALE();
+  scaleValueNumber = GET_DEFAULT();
   render();
 };
 

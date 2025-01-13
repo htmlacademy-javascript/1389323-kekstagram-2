@@ -1,27 +1,5 @@
 import {TIMEOUT_DELAY} from './constants.js';
 
-const getRandomInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
-};
-
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
-const getRandomArray = (elements, lengthNewArray) => {
-  const newArray = [];
-  const countIterations = elements.length >= lengthNewArray ? lengthNewArray : elements.length;
-  while (newArray.length < countIterations) {
-    const newElement = getRandomArrayElement(elements);
-    if (newArray.every((element) => element !== newElement)) {
-      newArray.push(newElement);
-    }
-  }
-  return newArray;
-};
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 let indexStart;
@@ -89,4 +67,4 @@ const debounce = (callback, timeoutDelay = TIMEOUT_DELAY) => {
   };
 };
 
-export {getRandomInteger, getRandomArrayElement, isEscapeKey, getIndexes, isDuplicate, detailsError, getRandomArray, debounce};
+export {isEscapeKey, getIndexes, isDuplicate, detailsError, debounce};
